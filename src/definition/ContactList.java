@@ -7,72 +7,73 @@ import java.util.ArrayList;
 
 
 
-public class ContactList<E> implements ContactADT<E> {
+public class ContactList<E> implements ContactADT<E>  {
     ArrayList listName = new ArrayList<String>();
     ArrayList listNameFirstName = new ArrayList<String>();
     private Node<E> head;
-    private int size = 0;
+    private int size= 0;
     private int counter = 0;
 
     //Created addFirst method
-    private void addFirst(E data) {
-        head = new Node<>((Person) data, head);
+    private void addFirst(E data){
+        head = new Node<>((Person) data,head);
         size++;
     }
 
     //Created addAfter method
-    private void addAfter(Node<E> node, E data) {
-        node.next = new Node<>((Person) data, node.next);
+    private void addAfter (Node <E> node , E data){
+        node.next = new Node<>((Person) data , node.next);
         size++;
     }
-
     public int getSize() {
         return size;
     }
 
-    @Override
-    public boolean addContact(int index, E data) {
-        if (index < 0 || index > size) {
+
+    //@Override
+    public void addContact(int index , E data) {
+        if(index<0 || index >size){
             throw new IndexOutOfBoundsException(Integer.toString(index));
-        } else if (size == 0) {
+        }
+        else if(size == 0){
             addFirst(data);
-        } else {
+        }
+        else{
             Node<E> count = getNode(index - 1);
-            addAfter(count, data);
+            addAfter(count,data);
         }
         //return false;
     }
 
-    private Node<E> getNode(int index) {
+    private Node<E> getNode(int index){
         Node<E> response = head;
-        for (int i = 0; i < index; i++) {
-            response = response.getNext();
+        for(int i= 0; i < index ;i++){
+            response= response.getNext();
 
         }
         return response;
 
     }
 
-    public void setName(String contactFirstName, String contactLastName) {
-        listName.add(contactFirstName + " " + contactLastName);
+    public void setName(String contactFirstName , String contactLastName) {
+        listName.add(contactFirstName+ " " + contactLastName);
     }
 
     public ArrayList getListName() {
         return listName;
     }
-
     public boolean addContact(E data) {
-        addContact(size, data);
+        addContact(size ,data);
         return false;
     }
 
-    private Person deleteFromContactsFirst() {
+    private Person deleteFromContactsFirst(){
         Person response = null;
-        Node<E> count = head;
-        if (head != null) {
-            head = head.getNext();
+        Node<E> count= head;
+        if (head != null){
+            head=head.getNext();
         }
-        if (count != null) {
+        if (count!=null){
             size--;
             response = count.getData();
 
@@ -97,15 +98,17 @@ public class ContactList<E> implements ContactADT<E> {
     }
 
 
+
     @Override
     public void viewContacts() {
-        if (size != 0) {
+        if (size!=0){
             System.out.println("---Here are all your contacts---");
-            for (int i = 0; i < size; i++) {
+            for (int i=0;i<size;i++){
                 Person data = this.getNode(i).getData();
                 System.out.println(data);
             }
-        } else {
+        }
+        else {
             System.out.println("No Contact Added Yet");
         }
 
@@ -114,45 +117,47 @@ public class ContactList<E> implements ContactADT<E> {
 
     @Override
     public void searchInContacts(String name) {
-        for (int i = 0; i < listNameFirstName.size(); i++) {
-            if (name.compareTo(listNameFirstName.get(i).toString()) == 0) {
+        for (int i = 0; i<listNameFirstName.size();i++){
+            if (name.compareTo(listNameFirstName.get(i).toString())==0){
                 counter++;
             }
         }
 
-        if (counter != 0) {
+        if (counter!=0){
             System.out.println(counter + " match found!");
-            for (int i = 0; i < listNameFirstName.size(); i++) {
-                if (name.compareTo(listNameFirstName.get(i).toString()) == 0) {
-                    Node<E> personNode = getNode(i);
+            for (int i = 0; i <listNameFirstName.size();i++){
+                if (name.compareTo(listNameFirstName.get(i).toString())==0){
+                    Node <E> personNode=getNode(i);
                     System.out.println(personNode.getData().toString());
                 }
 
             }
-        } else {
+        }
+        else {
             System.out.println("NO RESULTS FOUND!");
         }
-
 
     }
 
     @Override
     public boolean deleteFromContacts(int index) {
-        boolean response = false;
-        if (index - 1 < 0 || (index - 1 > getSize())) {
-            throw new IndexOutOfBoundsException(Integer.toString(index - 1));
-        } else if (index - 1 == 0) {
+        boolean response=false;
+        if (index-1<0 || (index-1>getSize())){
+            throw new IndexOutOfBoundsException(Integer.toString(index-1));
+        }
+
+        else if (index-1==0){
             deleteFromContactsFirst();
-            listName.remove(index - 1);
-            response = true;
-        } else {
-            Node<E> lastNode = getNode(index - 1);
+            listName.remove(index-1);
+            response=true;
+        }
+        else {
+            Node<E> lastNode= getNode(index-1);
             deleteFromContactsAfter(lastNode);
-            listName.remove(index - 1);
+            listName.remove(index-1);
             response = true;
         }
         return response;
-        //return false;
     }
 
     public void setFirstNameInList(String name) {
@@ -163,37 +168,26 @@ public class ContactList<E> implements ContactADT<E> {
         return listNameFirstName;
     }
 
-    private static class Node<E> {
+    private static class Node<E>{
         private Person data;
         private Node<E> next;
 
-        private Node(Person data, Node<E> next) {
+        private Node(Person data , Node<E> next){
             this.data = data;
             this.next = next;
         }
-
         private Person getData() {
             return data;
         }
-
         private void setData(Person data) {
             this.data = data;
         }
-
         private Node<E> getNext() {
             return next;
         }
-
         private void setNext(Node<E> next) {
             this.next = next;
         }
-
-    }
-
-}
-
-    //@Override
-    //public void printContact() {
 
     }
 }
