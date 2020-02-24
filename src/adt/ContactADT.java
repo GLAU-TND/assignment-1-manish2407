@@ -10,5 +10,5 @@ public interface ContactADT<E> {
     //for Deleting any contact from Contact List
     boolean deleteFromContacts(int index);
     //for Printing Contacts from Contact List
-     void printContact();
+     //void printContact();
 }
