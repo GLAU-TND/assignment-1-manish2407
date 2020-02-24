@@ -7,4 +7,6 @@ public interface ContactADT<E> {
     void viewContacts();
     //for Searching
     void searchInContacts(String name);
+    //for Deleting any contact from Contact List
+    boolean deleteFromContacts(int index);
 }
